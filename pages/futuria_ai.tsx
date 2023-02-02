@@ -133,7 +133,7 @@ const AiPage = () => {
     }
 
     //const query = 'Please check this sentences contains the related word with ' + categories[category - 1].data + '. If it contains then give me only one words "true", if it does not then give me "false". sentences: "' + userQuestion + '"';
-    const query = "Please check this '" + userQuestion + "' contains the word that related to the word 'travel,restaurant,meal and pub'."
+    const query = "Please check this '" + userQuestion + "' contains the word that related to the word 'finance'."
     console.log(query)
 
     const data = {
@@ -158,7 +158,7 @@ const AiPage = () => {
 
       console.log(result.choices[0].text)
 
-      if(result.choices[0].text.slice(2,5) === "Yes") {
+      if(result.choices[0].text.slice(2,5) !== "Yes") {
         const data = {
           prompt: question,
           max_tokens: 2000,
