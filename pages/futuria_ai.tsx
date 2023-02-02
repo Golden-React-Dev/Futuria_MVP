@@ -266,7 +266,15 @@ const AiPage = () => {
           </div>
         </div>
         <div className={`p-5 shadow-md bg-slate-100 ${styles.result_container}`}>
-          {result}
+          {result.split('\n').map((item)=>{
+              return (
+                <>
+                  {item}
+                  <br/>
+                </>
+              )
+            }
+          )}
           <div className={`flex justify-end ${styles.button_container}`}>
             <button type="button" className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`} onClick={handleCopyClick} >
               Copy
