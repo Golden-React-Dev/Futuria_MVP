@@ -1,7 +1,7 @@
 import styles from "../styles/ai.module.css"
 import { Stack } from "@chakra-ui/react"
 import ReactAudioPlayer from 'react-audio-player';
-import { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import logo from "../logo/logo7.png"
 
 export type audios = {
@@ -14,6 +14,14 @@ export type audios = {
 const apiKey = "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";
 
 const apiUrl = "https://api.openai.com/v1/completions";
+
+const keywords = ["finance", "trading", "sex", "blog", "article"];
+
+const subCategories = [
+  { id: 1, title: "honeymoon", hidden: "Write in a romantic fantasy style.", category_id: 1 },
+  { id: 2, title: "business", hidden: "Write in a safe style.", category_id: 1 },
+  { id: 3, title: "education", hidden: "Write in a helpful and educational style.", category_id: 1 },
+]
 
 const templates = [
   {
@@ -95,10 +103,13 @@ const musics = [
 ]
 
 const AiPage = () => {
+
   const [loading, setLoading] = useState<string>("")
   const [template, setTemplate] = useState<string[]>([""])
-  const [category, setCategory] = useState<number>(1);
+  const [category, setCategory] = useState<number>(0);
+  const [subCategory, setSubCategory] = useState<number>(0);
   const [language, setLanguage] = useState<string>("in English");
+  const [hidden, setHidden] = useState<string>("");
   const [question, setQuestion] = useState<string>("");
   const [userQuestion, setUserQuestion] = useState<string>("");
   const [qTemplate, setQtemplate] = useState<string>("");
@@ -114,13 +125,13 @@ const AiPage = () => {
     setAudios(audios)
     const cur_template = templates.filter(value => value.category_id === category)
     setTemplate(cur_template[0]?.data)
+    setSubCategory(0)
   }, [category])
 
   useEffect(() => {
-    const cur_category = categories.filter((value) => value.id === category)
-    const hidden = cur_category[0] ? cur_category[0].data : ""
-    setQuestion(userQuestion + "." + language)
-  }, [category, language, userQuestion])
+    const cur_subCategory = subCategories.filter((value) => value.id === subCategory)
+    setQuestion( cur_subCategory[0]?.hidden + userQuestion + "." + language)
+  }, [category, language, userQuestion, subCategory])
 
   useEffect(() => {
     setUserQuestion(qTemplate)
@@ -132,33 +143,46 @@ const AiPage = () => {
       return
     }
 
-    //const query = 'Please check this sentences contains the related word with ' + categories[category - 1].data + '. If it contains then give me only one words "true", if it does not then give me "false". sentences: "' + userQuestion + '"';
-    const query = "Please check this '" + userQuestion + "' contains the word that related to the word 'finance'."
-    console.log(query)
+    if (category === 0) {
+      alert("Please select the category")
+      return
+    }
 
-    const data = {
-      prompt: query,
-      max_tokens: 2000,
-      model: "text-davinci-003",
-      temperature: 0.5,
-    };
+    if (subCategory === 0) {
+      alert("Please select the subCategory")
+      return
+    }
+
+    //const query = 'Please check this sentences contains the related word with ' + categories[category - 1].data + '. If it contains then give me only one words "true", if it does not then give me "false". sentences: "' + userQuestion + '"';
+    // const query = "Please check this '" + userQuestion + "' contains the word that related to the word 'finance'."
+    // console.log(query)
+
+    // const data = {
+    //   prompt: query,
+    //   max_tokens: 2000,
+    //   model: "text-davinci-003",
+    //   temperature: 0.5,
+    // };
 
     try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + apiKey
-        },
-        body: JSON.stringify(data)
-      })
-      setLoading("Please Wait...")
-      const result = await response.json()
-      setLoading("")
+      // const response = await fetch(apiUrl, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "Authorization": "Bearer " + apiKey
+      //   },
+      //   body: JSON.stringify(data)
+      // })
+      // setLoading("Please Wait...")
+      // const result = await response.json()
+      // setLoading("")
 
-      console.log(result.choices[0].text)
+      const hasKeyword = keywords.some(keyword => userQuestion.includes(keyword));
 
-      if(result.choices[0].text.slice(2,5) !== "Yes") {
+      console.log(hasKeyword)
+
+      if(!hasKeyword) {
+        console.log(question)
         const data = {
           prompt: question,
           max_tokens: 2000,
@@ -216,16 +240,24 @@ const AiPage = () => {
                 <img src={logo.src} alt="logo" className={styles.logo_image} />
               </div>
               <div>
-                <select id="categories" className="ai_select mb-1" defaultValue={0} onChange={(e) => setCategory(Number(e.target.value))}>
-                  <option value="1">Choose a Category</option>
-                  {
-                    categories.map((value, index) => (<option key={index} value={value.id}>{value.data.toUpperCase()}</option>))
-                  }
-                </select>
                 <select id="languages" className="ai_select" onChange={(e) => setLanguage(e.target.value)}>
                   <option value="in English">Choose a Language</option>
                   {
                     languages.map((value, index) => (<option key={index} value={value.hidden_text}>{value.lang}</option>))
+                  }
+                </select>
+              </div>
+              <div>
+                <select id="categories" className="ai_select mb-1" defaultValue={0} onChange={(e) => setCategory(Number(e.target.value))}>
+                  <option value="0">Choose a Category</option>
+                  {
+                    categories.map((value, index) => (<option key={index} value={value.id}>{value.data.toUpperCase()}</option>))
+                  }
+                </select>
+                <select id="subCategories" className="ai_select mb-1" value={subCategory} disabled={category === 0 ? true : undefined} onChange={(e) => setSubCategory(Number(e.target.value))}>
+                  <option value="0">Choose a SubCategory</option>
+                  {
+                    subCategories.filter((value) => value.category_id === category).map((value, index) => (<option key={index} value={value.id}>{value.title.toUpperCase()}</option>))
                   }
                 </select>
               </div>
@@ -250,14 +282,14 @@ const AiPage = () => {
               <select id="audioSelector" className="ai_select" defaultValue={audios[0]?.url} onChange={(e) => setCurAudio(e.target.value)}>
                 <option value={audios[0]?.url}>Choose a Audio</option>
                 {
-                  audios.map((value, index) => <option key={index} value={value.url}>{value.title}</option>)
+                  audios?.map((value, index) => <option key={index} value={value.url}>{value.title}</option>)
                 }
               </select>
             </div>
             <div>
               <Stack direction='column'>
                 {
-                  template.map((value, index) => (
+                  template?.map((value, index) => (
                     (<span key={index} className="text-lg py-1 px-2.5 font-bold bg-green-500 text-white rounded hover:cursor-pointer" onClick={() => setQtemplate(value)}>{value}</span>)
                   ))
                 }
@@ -266,14 +298,12 @@ const AiPage = () => {
           </div>
         </div>
         <div className={`p-5 shadow-md bg-slate-100 ${styles.result_container}`}>
-          {result.split('\n').map((item)=>{
-              return (
-                <>
-                  {item}
-                  <br/>
-                </>
-              )
-            }
+          {result.split('\n').map((item:string, index:number) => (
+              <React.Fragment key={index}>
+                {item}
+                <br/>
+              </React.Fragment>
+            )
           )}
           <div className={`flex justify-end ${styles.button_container}`}>
             <button type="button" className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`} onClick={handleCopyClick} >
