@@ -110,6 +110,7 @@ const AiPage = () => {
       setTemplate(
         cur_template ? cur_template.map((value) => value.data) : [""]
       );
+      setCurAudio("0");
     }
   }, [category]);
 
@@ -170,14 +171,19 @@ const AiPage = () => {
             setIsLoading(false);
             setResult(data.choices[0].text);
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            setIsLoading(false);
+            console.error(error);
+            alert(error);
+          });
       } else {
         alert(
           "Please set the correct query. These query isn't related with given category."
         );
       }
     } catch (err) {
-      alert("Something went wrong." + err);
+      setIsLoading(false);
+      alert("Something went wrong.\n" + err);
     }
   }, [question, userQuestion, category]);
 
@@ -312,7 +318,7 @@ const AiPage = () => {
               <select
                 id="audioSelector"
                 className="ai_select"
-                defaultValue="0"
+                value={curAudio}
                 onChange={(e) => setCurAudio(e.target.value)}
               >
                 <option value="0">Choose a Audio</option>
