@@ -86,7 +86,7 @@ const AiPage = () => {
           }
         });
     } catch (error) {
-      alert("Something went wrong.");
+      alert("Something went wrong." + error);
     }
   }, []);
 
@@ -121,7 +121,7 @@ const AiPage = () => {
     console.log(cur_subCategory);
     setQuestion(
       cur_subCategory?.length !== 0 && cur_subCategory
-        ? cur_subCategory[0].hidden_text + userQuestion + "." + language
+        ? cur_subCategory[0].hidden_text + ". " + userQuestion + "." + language
         : ""
     );
   }, [language, userQuestion, subCategory]);
@@ -174,7 +174,6 @@ const AiPage = () => {
           .catch((error) => {
             setIsLoading(false);
             console.error(error);
-            alert(error);
           });
       } else {
         alert(
@@ -248,7 +247,7 @@ const AiPage = () => {
                 <select
                   id="categories"
                   className="ai_select mb-1"
-                  defaultValue={"0"}
+                  defaultValue={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option value="none">Choose a Category</option>
@@ -286,7 +285,7 @@ const AiPage = () => {
               />
               <button
                 type="button"
-                className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+                className={`${styles.run_button} ai_button`}
                 onClick={handleRunClick}
               >
                 <svg
@@ -356,21 +355,21 @@ const AiPage = () => {
           <div className={`flex justify-end ${styles.button_container}`}>
             <button
               type="button"
-              className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+              className={`${styles.run_button} ai_button`}
               onClick={handleCopyClick}
             >
               Copy
             </button>
             <button
               type="button"
-              className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+              className={`${styles.run_button} ai_button`}
               onClick={() => setResult("")}
             >
               Delete
             </button>
             <button
               type="button"
-              className={`${styles.run_button} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`}
+              className={`${styles.run_button} ai_button`}
               onClick={handleRunClick}
             >
               Save
