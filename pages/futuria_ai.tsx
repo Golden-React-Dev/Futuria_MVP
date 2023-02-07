@@ -60,7 +60,7 @@ const AiPage = () => {
   const [category, setCategory] = useState<string>("none");
   const [keyword, setKeyword] = useState<string[]>([""]);
   const [template, setTemplate] = useState<string[]>([""]);
-  const [subCategory, setSubCategory] = useState<string>("");
+  const [subCategory, setSubCategory] = useState<string>("0");
   const [language, setLanguage] = useState<string>("in English");
   const [question, setQuestion] = useState<string>("");
   const [userQuestion, setUserQuestion] = useState<string>("");
@@ -91,7 +91,7 @@ const AiPage = () => {
   }, []);
 
   useEffect(() => {
-    if (category !== "none") {
+    if (category !== "none" || subCategory === "0") {
       const cur_category = categories?.filter((value) => value.id === category);
       const keywords =
         cur_category !== undefined
@@ -112,13 +112,15 @@ const AiPage = () => {
       );
       setCurAudio("0");
     }
-  }, [category]);
+  }, [category, subCategory]);
 
   useEffect(() => {
-    const video = videos?.filter((value) => value.category === subCategory);
-    setVideoUrl(video ? video[0].url + "&autoplay=1" : "");
-    const audios = musics?.filter((value) => value.category === subCategory);
-    setAudios(audios);
+    if (subCategory !== "0") {
+      const video = videos?.filter((value) => value.category === subCategory);
+      setVideoUrl(video ? video[0].url + "&autoplay=1" : "");
+      const audios = musics?.filter((value) => value.category === subCategory);
+      setAudios(audios);
+    }
   }, [subCategory]);
 
   useEffect(() => {
