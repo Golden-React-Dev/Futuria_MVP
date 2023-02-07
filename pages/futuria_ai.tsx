@@ -91,7 +91,7 @@ const AiPage = () => {
   }, []);
 
   useEffect(() => {
-    if (category !== "none" && subCategory === "0") {
+    if (category !== "none") {
       const cur_category = categories?.filter((value) => value.id === category);
       console.log("~~~~~~~~~~~~~~~~~~",cur_category,category)
       const keywords =
@@ -111,9 +111,10 @@ const AiPage = () => {
       setTemplate(
         cur_template ? cur_template.map((value) => value.data) : [""]
       );
+      setSubCategory("0");
       setCurAudio("0");
     }
-  }, [category, subCategory]);
+  }, [category]);
 
   useEffect(() => {
     if (subCategory !== "0") {
@@ -121,6 +122,7 @@ const AiPage = () => {
       setVideoUrl(video ? video[0].url + "&autoplay=1" : "");
       const audios = musics?.filter((value) => value.category === subCategory);
       setAudios(audios);
+      setCurAudio("0");
     }
   }, [subCategory]);
 
