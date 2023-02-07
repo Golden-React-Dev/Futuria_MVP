@@ -91,8 +91,9 @@ const AiPage = () => {
   }, []);
 
   useEffect(() => {
-    if (category !== "none" || subCategory === "0") {
+    if (category !== "none" && subCategory === "0") {
       const cur_category = categories?.filter((value) => value.id === category);
+      console.log("~~~~~~~~~~~~~~~~~~",cur_category,category)
       const keywords =
         cur_category !== undefined
           ? cur_category[0].keyword
@@ -256,7 +257,7 @@ const AiPage = () => {
                 <select
                   id="categories"
                   className="ai_select mb-1"
-                  defaultValue={category}
+                  value={category}
                   onChange={(e) => setCategory(e.target.value)}
                 >
                   <option value="none">Choose a Category</option>
