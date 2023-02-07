@@ -115,6 +115,13 @@ const AiPage = () => {
   }, [category]);
 
   useEffect(() => {
+    const video = videos?.filter((value) => value.category === subCategory);
+    setVideoUrl(video ? video[0].url + "&autoplay=1" : "");
+    const audios = musics?.filter((value) => value.category === subCategory);
+    setAudios(audios);
+  }, [subCategory]);
+
+  useEffect(() => {
     const cur_subCategory = subCategories?.filter(
       (value) => value.id === subCategory
     );
