@@ -41,12 +41,13 @@ export type Video = {
   url: string;
 };
 
-const apiKey = "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";
+const apiKey = process.env.API_KEY;
 
-const apiUrl = "https://api.openai.com/v1/completions";
+const apiUrl = process.env.OPEN_AI_URL
+  ? process.env.OPEN_AI_URL
+  : "https://api.openai.com/v1/completions";
 
-const apiDataUrl =
-  "https://futuria-git-main-futurixlab.vercel.app/api/categories";
+const apiDataUrl = process.env.API_DATA_URL;
 
 const AiPage = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -93,7 +94,7 @@ const AiPage = () => {
   useEffect(() => {
     if (category !== "none") {
       const cur_category = categories?.filter((value) => value.id === category);
-      console.log("~~~~~~~~~~~~~~~~~~",cur_category,category)
+      console.log("~~~~~~~~~~~~~~~~~~", cur_category, category);
       const keywords =
         cur_category !== undefined
           ? cur_category[0].keyword
