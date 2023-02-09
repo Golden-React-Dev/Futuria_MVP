@@ -40,14 +40,13 @@ export type Video = {
   id: string;
   url: string;
 };
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
-const apiKey = process.env.API_KEY;
-
-const apiUrl = process.env.OPEN_AI_URL
-  ? process.env.OPEN_AI_URL
+const apiUrl = process.env.NEXT_PUBLIC_OPEN_AI_URL
+  ? process.env.NEXT_PUBLIC_OPEN_AI_URL
   : "https://api.openai.com/v1/completions";
 
-const apiDataUrl = process.env.API_DATA_URL;
+const apiDataUrl = process.env.NEXT_PUBLIC_API_DATA_URL;
 
 const AiPage = () => {
   const [categories, setCategories] = useState<Category[]>();
