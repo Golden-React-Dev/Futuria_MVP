@@ -40,13 +40,14 @@ export type Video = {
   id: string;
   url: string;
 };
-const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
+const apiKey = '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';
 
 const apiUrl = process.env.NEXT_PUBLIC_OPEN_AI_URL
   ? process.env.NEXT_PUBLIC_OPEN_AI_URL
   : "https://api.openai.com/v1/completions";
 
-const apiDataUrl = process.env.NEXT_PUBLIC_API_DATA_URL;
+const apiDataUrl = 'https://futuria-git-main-futurixlab.vercel.app/api/categories';
 
 const AiPage = () => {
   const [categories, setCategories] = useState<Category[]>();
