@@ -41,13 +41,14 @@ export type Video = {
   url: string;
 };
 
-const apiKey = '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';
+const apiKey = "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";
 
 const apiUrl = process.env.NEXT_PUBLIC_OPEN_AI_URL
   ? process.env.NEXT_PUBLIC_OPEN_AI_URL
   : "https://api.openai.com/v1/completions";
 
-const apiDataUrl = 'https://futuria-git-main-futurixlab.vercel.app/api/categories';
+const apiDataUrl =
+  "https://futuria-git-main-futurixlab.vercel.app/api/categories";
 
 const AiPage = () => {
   const [categories, setCategories] = useState<Category[]>();
@@ -145,22 +146,22 @@ const AiPage = () => {
       return;
     }
 
-    if (category === "none") {
-      alert("Please select the category");
-      return;
-    }
+    // if (category === "none") {
+    //   alert("Please select the category");
+    //   return;
+    // }
 
-    if (subCategory === "" || subCategory === "0") {
-      alert("Please select the subCategory");
-      return;
-    }
+    // if (subCategory === "" || subCategory === "0") {
+    //   alert("Please select the subCategory");
+    //   return;
+    // }
 
     try {
       const hasKeyword = keyword.some((keyword) =>
         userQuestion.includes(keyword)
       );
 
-      if (!hasKeyword) {
+      if (true) {
         setIsLoading(true);
         console.log(question);
         const data = {
