@@ -41,7 +41,7 @@ export type Video = {
   url: string;
 };
 
-const apiKey = "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";
+const apiKey = "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";
 
 const apiUrl = process.env.NEXT_PUBLIC_OPEN_AI_URL
   ? process.env.NEXT_PUBLIC_OPEN_AI_URL
