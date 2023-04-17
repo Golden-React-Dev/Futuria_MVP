@@ -43,7 +43,7 @@ export type Video = {
 
 const apiKey = "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";
 
-const apiUrl = https://api.openai.com/v1/chat/completions;
+const apiUrl = "https://api.openai.com/v1/chat/completions";
 
 const apiDataUrl =
   "https://futuria-git-main-futurixlab.vercel.app/api/categories";
