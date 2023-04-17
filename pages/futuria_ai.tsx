@@ -43,9 +43,7 @@ export type Video = {
 
 const apiKey = "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";
 
-const apiUrl = process.env.NEXT_PUBLIC_OPEN_AI_URL
-  ? process.env.NEXT_PUBLIC_OPEN_AI_URL
-  : "https://api.openai.com/v1/completions";
+const apiUrl = https://api.openai.com/v1/chat/completions;
 
 const apiDataUrl =
   "https://futuria-git-main-futurixlab.vercel.app/api/categories";
@@ -165,9 +163,10 @@ const AiPage = () => {
         setIsLoading(true);
         console.log(question);
         const data = {
-          prompt: question,
+          messages: question,
           max_tokens: 2000,
-          model: "text-davinci-003"
+          model: "gpt-3.5-turbo",
+          temperature: 0.5,
         };
 
         fetch(apiUrl, {
@@ -180,9 +179,9 @@ const AiPage = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data.choices[0].text);
+            console.log(data.choices[0].message.content);
             setIsLoading(false);
-            setResult(data.choices[0].text);
+            setResult(data.choices[0].message.content);
           })
           .catch((error) => {
             setIsLoading(false);
