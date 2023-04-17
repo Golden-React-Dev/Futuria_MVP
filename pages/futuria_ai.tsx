@@ -167,8 +167,7 @@ const AiPage = () => {
         const data = {
           prompt: question,
           max_tokens: 2000,
-          model: "text-davinci-003",
-          temperature: 0.5,
+          model: "text-davinci-003"
         };
 
         fetch(apiUrl, {
