@@ -162,8 +162,14 @@ const AiPage = () => {
       if (true) {
         setIsLoading(true);
         console.log(question);
+        const prompt = [
+          {
+            role: "user",
+            content: question,
+          },
+        ];
         const data = {
-          messages: question,
+          messages: prompt,
           max_tokens: 2000,
           model: "gpt-3.5-turbo",
           temperature: 0.5,
