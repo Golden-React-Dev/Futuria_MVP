@@ -131,11 +131,7 @@ const AiPage = () => {
       (value) => value.id === subCategory
     );
     console.log(cur_subCategory);
-    setQuestion(
-      cur_subCategory?.length !== 0 && cur_subCategory
-        ? userQuestion
-        : ""
-    );
+    setQuestion(userQuestion);
   }, [language, userQuestion, subCategory]);
 
   const handleRunClick = useCallback(async () => {
