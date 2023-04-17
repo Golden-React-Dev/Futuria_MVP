@@ -135,7 +135,7 @@ const AiPage = () => {
     console.log(cur_subCategory);
     setQuestion(
       cur_subCategory?.length !== 0 && cur_subCategory
-        ? cur_subCategory[0].hidden_text + ". " + userQuestion + "." + language
+        ? userQuestion
         : ""
     );
   }, [language, userQuestion, subCategory]);
