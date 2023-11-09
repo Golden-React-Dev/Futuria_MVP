@@ -41,7 +41,7 @@ export type Video = {
   url: string;
 };
 
-const apiKey = "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";
+const apiKey = "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";
 
 const apiUrl = "https://api.openai.com/v1/chat/completions";
 
